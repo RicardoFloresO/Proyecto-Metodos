@@ -253,6 +253,12 @@ void mostrarMapa(Mapa* mapita){
 	int botAlt = mapita->tablero[botFil][botCol].altura;
 	printf("DATOS BOT: Posicion-> [%d][%d] / Altura-> %d m\n",botFil,botCol,botAlt);
 
+	// Datos de la salida
+	int salidaFil = mapita->salida.fila;
+	int salidaCol = mapita->salida.columna;
+	int salidaAlt = mapita->tablero[salidaFil][salidaCol].altura;
+	printf("DATOS SALIDA: Posicion-> [%d][%d] / Altura-> %d m\n",salidaFil,salidaCol,salidaAlt);
+
 	// printear mapa
 
 	// Enumera las columnas
