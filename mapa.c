@@ -24,7 +24,7 @@ void llenarMapa(Mapa* mapita){
 													  //entonces se usa el modulo para que de un valor entre 0 y 5
 			
 			// Se asignan vacios a los idPosicion en casilla y un 0 para marcar que ninguna casilla es salida
-			mapita->tablero[i][j].idPosicion = "V";
+			mapita->tablero[i][j].idPosicion = 'V';
 			mapita->tablero[i][j].esSalida = 0;
 
 		}
@@ -37,7 +37,7 @@ void asignarPosiciones(Mapa* mapita){
 	// Asignar una posicion al Jugador
 	int filaJugador = rand() % FILAS;
 	int columnaJugador = rand() % COLUMNAS;
-	mapita->tablero[filaJugador][columnaJugador].idPosicion = "J";
+	mapita->tablero[filaJugador][columnaJugador].idPosicion = 'J';
 	mapita->inicioJugador = mapita->tablero[filaJugador][columnaJugador];
 
 	// Asignar una posicion al Bot
@@ -48,7 +48,7 @@ void asignarPosiciones(Mapa* mapita){
 		columnaBot = rand() % COLUMNAS;
 	} while (filaBot == filaJugador && columnaBot == columnaJugador);
 
-	mapita->tablero[filaBot][columnaBot].idPosicion = "B";
+	mapita->tablero[filaBot][columnaBot].idPosicion = 'B';
 	mapita->inicioBot = mapita->tablero[filaBot][columnaJugador];
 
 	// Asignar posicion a la salida
