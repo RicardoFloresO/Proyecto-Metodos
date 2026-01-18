@@ -12,15 +12,15 @@
 // Esto luego se validara y se vera si el mapa sirve o no.
 
 void llenarMapa(Mapa* mapita){
-	for (int i = 0; i < filas; ++i){
-		for (int j = 0; i < columnas; ++j){
+	for (int i = 0; i < FILAS; ++i){
+		for (int j = 0; i < COLUMNAS; ++j){
 			
 			// Guardamos la fila y columna en el struct mapa en la parte tablero, la cual es del tipo casilla
 			mapita->tablero[i][j].fila = i;
 			mapita->tablero[i][j].columna = j;
 
 			// Generamos una altura al azar entre 0 y 5
-			mapita->tablero[i][j].altura = rand() % 6 //rand genera un numero aleatorio pero no se puede poner un limite en C
+			mapita->tablero[i][j].altura = rand() % 6; //rand genera un numero aleatorio pero no se puede poner un limite en C
 													  //entonces se usa el modulo para que de un valor entre 0 y 5
 			
 			// Se asignan vacios a los idPosicion en casilla y un 0 para marcar que ninguna casilla es salida
@@ -53,13 +53,13 @@ void asignarPosiciones(Mapa* mapita){
 
 	// Asignar posicion a la salida
 	int filaSalida;
-	int columaSalida;
+	int columnaSalida;
 	do{
 		filaSalida = rand() % FILAS;
 		columnaSalida = rand() % COLUMNAS;
 	}while ((filaSalida==filaBot && columnaSalida==columnaBot)||(filaSalida==filaJugador && columnaSalida==columnaJugador));
 
-	mapita->tablero[filaSalida][columaSalida].esSalida = 1;
+	mapita->tablero[filaSalida][columnaSalida].esSalida = 1;
 	mapita->salida = mapita->tablero[filaSalida][columnaSalida];
 
 }
