@@ -1,17 +1,32 @@
 #include <stdio.h>
-#include <ctype>
+#include <stdlib.h>
+#include <ctype.h>
 #include "jugador.h"
 
+// Funcion que valida el movimiento del jugador
+static int movimientoValido(Mapa* mapita, Posicion actual, Posicion destino){
+    if(destino.fila < 0 || destino.fila >= FILAS || destino.columna < 0 || destino.columna >= COLUMNAS){
+        return 0;
+    }
+
+    int altActual = mapita->tablero[actual.fila][actual.columna].altura;
+    int altDestino = mapita->tablero[destino.fila][destino.columna].altura;
+
+    if(abs(altActual - altDestino) <= 2){
+        return 1;
+    }
+    return 0;
+}
 // static solo se usa dentro de este archivo y no se puede llamar de otros modulos 
-static void mostratDisp(Jugador *j);
+static void mostrarDisp(Jugador *j);
 static void usarDisp(Jugador *j);
-static void moverJugador(Jugador *j, Tablero t); 
+static void moverJugador(Jugador *j, Mapa* mapita); 
 
 void inicializarJugador(Jugador *j, Posicion inicio) {
 
     // Asignar posicion inicial
-    j->pos.x = inicio.x;
-    j->pos.y = inicio.y;
+    j->pos.fila = inicio.fila;
+    j->pos.columna = inicio.columna;
 
     // Activar todos los dispositivos
     j->dispositivos[0] = 1;
@@ -20,7 +35,7 @@ void inicializarJugador(Jugador *j, Posicion inicio) {
 }
 
 
-int menuTurnoJugador( Jugador *j, Tablero t){
+int menuTurnoJugador( Jugador *j, Mapa* mapita){
     int opcion;
     printf("\n***TURNO JUGADOR***\n");
     printf("1)Moverse.\n");
@@ -36,7 +51,7 @@ int menuTurnoJugador( Jugador *j, Tablero t){
     }
     switch (opcion){
         case 1:
-            moverJugador(j,t);
+            moverJugador(j,mapita);
             return 1;
         case 2:
             usarDisp(j);
@@ -51,45 +66,51 @@ int menuTurnoJugador( Jugador *j, Tablero t){
 
 }
 
-static void moverJugador(Jugador *j, Tablero t){
+static void moverJugador(Jugador *j, Mapa* mapita){
     char tecla;
     Posicion nueva;
     // Copiar posicion actual
-    nueva.x = j->pos.x;
-    nueva.y = j->pos.y;
+    nueva.fila = j->pos.fila;
+    nueva.columna = j->pos.columna;
 
     printf("Mover (W=arriba, A=izq, S=abajo, D=der): ");
     scanf(" %c", &tecla);
     tecla = toupper(tecla);
 
     if (tecla == 'W') {
-        nueva.x = nueva.x - 1;
+        nueva.fila = nueva.fila - 1;
     }
     else if (tecla == 'S') {
-        nueva.x = nueva.x + 1;
+        nueva.fila = nueva.fila + 1;
     }
     else if (tecla == 'A') {
-        nueva.y = nueva.y - 1;
+        nueva.columna = nueva.columna - 1;
     }
     else if (tecla == 'D') {
-        nueva.y = nueva.y + 1;
+        nueva.columna = nueva.columna + 1;
     }
     else {
         printf("Tecla invalida\n");
         return;
     }
 
-    if (nueva.x < 0 || nueva.x >= N || nueva.y < 0 ||nueva.y >= N ){
+    /*if (nueva.fila < 0 || nueva.x >= N || nueva.y < 0 ||nueva.y >= N ){
         printf("¡No se puede salir del tablero!");
         return;
-    }
-    if (movimientoValido(t, j->pos, nueva)) {
-        j->pos.x = nueva.x;
-        j->pos.y = nueva.y;
+    }*/
+    if (movimientoValido(mapita, j->pos, nueva)) {
+        mapita->tablero[j->pos.fila][j->pos.columna].idPosicion = 'V';
+
+        j->pos = nueva;
+
+        mapita->tablero[nueva.fila][nueva.columna].idPosicion = 'J';
+
+        mapita->inicioJugador.fila = nueva.fila;
+        mapita->inicioJugador.columna = nueva.columna;
         printf("Movimiento correcto\n");
     }
     else {
-        printf("Movimiento invalido (diferencia de altura > 2)\n");
+        printf("Movimiento invalido (diferencia de altura > 2 o fuera del mapa)\n");
     }
 }
 static void mostrarDisp(Jugador *j) {
