@@ -100,10 +100,10 @@ void turnoBot(Bot* b, Jugador* j,Mapa* m){
 	//En caso que anchura devuelva un -1 de camino invalido se cambia por un numero gigante
 	//De este modo se sabra si el bot o jugador esta atrapado
 	if (distBot == -1){
-		distBot	== 1000;
+		distBot	= 1000;
 	}
 	if (distJugador == -1){
-		distJugador	== 1000;
+		distJugador	= 1000;
 	}
 	//Bandera para saber cuando uso un dispositivo
 	int usoDispositivo = 0;

@@ -21,7 +21,7 @@ static int movimientoValido(Mapa* mapita, Casilla actual, Casilla destino){
 // static solo se usa dentro de este archivo y no se puede llamar de otros modulos 
 static void mostrarDisp(Jugador *j);
 static void usarDisp(Jugador *j);
-static void moverJugador(Jugador *j, Mapa* mapita); 
+static int moverJugador(Jugador *j, Mapa* mapita); 
 
 // cambie void inicializarJugador(Jugador *j, Posicion inicio) a
 void inicializarJugador(Jugador *j, Casilla inicio) {
@@ -59,7 +59,7 @@ int menuTurnoJugador( Jugador *j, Mapa* mapita){
             usarDisp(j);
             return 0;
         case 3:
-            printf("Te haz rendido.\n");
+            printf("Te has rendido.\n");
             return -1;
         default:
             printf("Opcion invalida\n");
@@ -68,7 +68,7 @@ int menuTurnoJugador( Jugador *j, Mapa* mapita){
 
 }
 
-static void moverJugador(Jugador *j, Mapa* mapita){
+static int moverJugador(Jugador *j, Mapa* mapita){
     char tecla;
     //Posicion nueva;
     Casilla nueva;
@@ -94,7 +94,7 @@ static void moverJugador(Jugador *j, Mapa* mapita){
     }
     else {
         printf("Tecla invalida\n");
-        return;
+        return 0;
     }
 
     /*if (nueva.fila < 0 || nueva.x >= N || nueva.y < 0 ||nueva.y >= N ){
@@ -111,9 +111,11 @@ static void moverJugador(Jugador *j, Mapa* mapita){
         mapita->inicioJugador.fila = nueva.fila;
         mapita->inicioJugador.columna = nueva.columna;
         printf("Movimiento correcto\n");
+        return 1;
     }
     else {
         printf("Movimiento invalido (diferencia de altura > 2 o fuera del mapa)\n");
+        return 0;
     }
 }
 static void mostrarDisp(Jugador *j) {

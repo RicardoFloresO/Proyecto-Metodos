@@ -2,26 +2,40 @@
 #include <stdlib.h> // rand, srand, system 
 #include <time.h> // time(), para num aleatorios 
 //archivos que tienen las funciones del juego
-#include "tablero.h"  //manejo del tablero 
+#include "mapa.h"  
 #include "jugador.h"
-#include "ia.h"
-#include "utilidades.h"
-#include "dispositivos.h"
+#include "bot.h"
+//falta
+//#include "utilidades.h"
+//#include "dispositivos.h"
+
+//funcion para limpiar pantalla
+void limpiarPantalla(){
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
 
 int main() {
     srand(time(NULL));
 
      // variables principales 
-    Tablero tablero;   //mapa del juego 
+    Mapa* mapita = crearMapa();   //mapa del juego 
     Jugador jugador;   //usuario
-    Posicion ia;       //la pos del bot 
+    Bot bot;       // bot 
+    Casilla salida;
 
     //posiciones iniciales 
-    Posicion inicioJugador; 
-    Posicion inicioIA; 
-    Posicion meta;
+    jugador.pos = mapita->inicioJugador; 
+    bot.pos = mapita->inicioBot; 
+    salida = mapita->salida;    
 
+    inicializarJugador(&jugador,jugador.pos);
+    iniciarBot(&bot,bot.pos);
 
+    /*
     //posiciones aleatorias 
     inicioJugador = posicionBordeAleatoria(); //devuleve una posicion en el borde, proviene de tablero.c
 
@@ -48,7 +62,7 @@ int main() {
 
     //Inicia jugador o IA
     inicializarJugador(&jugador, inicioJugador);
-    ia = inicioIA;   //guarda posicion inicial ia 
+    ia = inicioIA;   //guarda posicion inicial ia */
 
     //Cara o sello
     int op;
@@ -63,10 +77,12 @@ int main() {
 
     moneda = rand() % 2 + 1; //genera 1 o 2 aleatorio 
 
-    if (moneda == 1)
+    if (moneda == 1){
         printf("\nSalio: Cara\n");
-    else
+    }
+    else{
         printf("\nSalio: Sello\n");
+    }
 
     if (op == moneda) {
         printf("Ganaste. Empiezas tu.\n");
@@ -81,34 +97,36 @@ int main() {
 
     //Juego por turnos, se ejecuta hasta que alguien gane 
     while (1) {
-        limpiarPantalla();   //borra la consola 
-        mostrarTablero(tablero, jugador.pos, ia);  //muestra el tablero con las posiciones jugador, ia, meta.
+        //limpiarPantalla();   //borra la consola 
+        mostrarMapa(mapita);  //muestra el mapa con las posiciones jugador, ia, meta.
 
         // Verificar ganador, el primero que llega a la meta gana.
-        if (jugador.pos.x == tablero.meta.x && jugador.pos.y == tablero.meta.y) {
+        if (jugador.pos.fila == mapita->salida.fila && jugador.pos.columna == mapita->salida.columna) {
             printf("\n¡GANASTE!\n");
             break;
         }
 
-        if (ia.x == tablero.meta.x && ia.y == tablero.meta.y) {
+        if (bot.pos.fila == mapita->salida.fila && bot.pos.columna == mapita->salida.columna) {
             printf("\nGano la IA\n");
             break;
         }
 
         //turno del jugador
         if (turnoJugador) {
-            if (menuTurnoJugador(&jugador, tablero) == -1) // -1 si el jugador decide rendirse 
-                break;                                     // 0 sigue jugando 
-            turnoJugador = 0;
-        }
-        //turno de la IA
-        else {
-            printf("\nTurno de la IA...\n");
-            turnoIA(&ia, tablero);
+            if (menuTurnoJugador(&jugador, mapita) == -1){ // -1 si el jugador decide rendirse
+                break;  
+            } 
+            if (menuTurnoJugador(&jugador, mapita) == 1){
+                turnoJugador = 0;
+            }
+            
+        }else { //turno bot
+            printf("\nTurno del Bot...\n");
+            turnoBot(&bot, &jugador, mapita);
             system("pause");
             turnoJugador = 1;
         }
     }
-
+    free(mapita);
     return 0;
 }
