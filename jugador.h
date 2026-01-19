@@ -9,12 +9,14 @@
 } Posicion;*/
 
 typedef struct {
-    Posicion pos;
+    //Posicion pos;
+    Casilla pos;
     int dispositivos[3];
 } Jugador;
 
-void inicializarJugador(Jugador *j, Posicion inicio);
+//void inicializarJugador(Jugador *j, Posicion inicio);
 
+void inicializarJugador(Jugador *j, Casilla inicio);
 int menuTurnoJugador(Jugador *j, Mapa* m);  
 
 #endif

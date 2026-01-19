@@ -4,7 +4,8 @@
 #include "jugador.h"
 
 // Funcion que valida el movimiento del jugador
-static int movimientoValido(Mapa* mapita, Posicion actual, Posicion destino){
+// Cambie int movimientoValido(Mapa* mapita, Posicion actual, Posicion destino) a
+static int movimientoValido(Mapa* mapita, Casilla actual, Casilla destino){
     if(destino.fila < 0 || destino.fila >= FILAS || destino.columna < 0 || destino.columna >= COLUMNAS){
         return 0;
     }
@@ -22,7 +23,8 @@ static void mostrarDisp(Jugador *j);
 static void usarDisp(Jugador *j);
 static void moverJugador(Jugador *j, Mapa* mapita); 
 
-void inicializarJugador(Jugador *j, Posicion inicio) {
+// cambie void inicializarJugador(Jugador *j, Posicion inicio) a
+void inicializarJugador(Jugador *j, Casilla inicio) {
 
     // Asignar posicion inicial
     j->pos.fila = inicio.fila;
@@ -68,7 +70,8 @@ int menuTurnoJugador( Jugador *j, Mapa* mapita){
 
 static void moverJugador(Jugador *j, Mapa* mapita){
     char tecla;
-    Posicion nueva;
+    //Posicion nueva;
+    Casilla nueva;
     // Copiar posicion actual
     nueva.fila = j->pos.fila;
     nueva.columna = j->pos.columna;

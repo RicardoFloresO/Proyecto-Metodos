@@ -78,7 +78,7 @@ int alturasValidas(Mapa* mapita){
 			int alturaActual = mapita->tablero[i][j].altura;
 			int vecinoValido = 0; // vecinoValido parte en 0 y cuando se encuentre uno se dira que es valido 
 
-			//recorrer vecinos
+			//recorrer vecinos para verificar las diferencias de altura
 			for (int k=0; k<4; k++){
 				int vecinoFila = i + cambioFila[k];
 				int vecinoColumna = j + cambioColumna[k];
@@ -104,9 +104,9 @@ int alturasValidas(Mapa* mapita){
 
 
 
-// BEE en anchura para encontrar caminos validos
+// BEE en anchura para encontrar el camino mas corto
 
-// Primero se crea la estructura fila, con la metodologia FIFO
+// Primero se crea la estructura cola, con la metodologia FIFO
 
 struct cola{
 	int filaCola;
@@ -146,7 +146,7 @@ int anchura(Mapa* mapita, Casilla inicio, Casilla final){
 			return actual.pasos;
 		}
 
-		// Revisar vecinos
+		// Revisar vecinos para encontrar la salida
 		for (int i = 0; i < 4; i++){
 			// Coord vecinos
 			int vecinoFila = actual.filaCola + cambioFila[i];
