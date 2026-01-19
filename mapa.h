@@ -6,11 +6,6 @@
 #define FILAS 8
 #define COLUMNAS 8
 
-typedef struct{
-	int f; // fila
-	int c; // columna
-} Posicion;
-
 struct casilla{
 	int fila; //en que fila del tablero esta la casilla
 	int columna; //en que columna del tablero esta la casilla
