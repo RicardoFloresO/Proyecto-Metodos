@@ -6,6 +6,11 @@
 #define FILAS 8
 #define COLUMNAS 8
 
+typedef struct{
+	int fila; 
+	int columna; 
+} Posicion;
+
 struct casilla{
 	int fila; //en que fila del tablero esta la casilla
 	int columna; //en que columna del tablero esta la casilla
@@ -33,6 +38,6 @@ int validarMapa(Mapa* mapita);
 
 void mostrarMapa(Mapa* mapita);
 
-int movimientoValido(Mapa* mapita, Posicion actual, Posicion destino);
+//int movimientoValido(Mapa* mapita, Posicion actual, Posicion destino);
 
 #endif 

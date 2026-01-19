@@ -3,10 +3,10 @@
 
 #include "mapa.h"
 
-typedef struct {
+/*typedef struct {
     int fila; 
     int columna; 
-} Posicion;
+} Posicion;*/
 
 typedef struct {
     Posicion pos;
