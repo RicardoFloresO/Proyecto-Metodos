@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Inicialización
+// Inicializacion
 
 void inicializarDispositivos(Dispositivo d[], TipoDispositivo seleccionados[]) {
     for (int i = 0; i < 3; i++) {
@@ -11,7 +11,7 @@ void inicializarDispositivos(Dispositivo d[], TipoDispositivo seleccionados[]) {
     }
 }
 
-// Activación general
+// Activacion general
 
 int activarDispositivo(
     Dispositivo *d,
@@ -22,7 +22,7 @@ int activarDispositivo(
     if (d->estado != DISP_DISPONIBLE)
         return 0;
 
-    // Simulación mini-juego (50% éxito por ahora)
+    // Simulacion mini-juego (50% exito por ahora)
     int exito = rand() % 2;
 
     if (!exito) {
