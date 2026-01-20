@@ -7,7 +7,7 @@
 #include "bot.h"
 //falta
 //#include "utilidades.h"
-//#include "dispositivos.h"
+#include "dispositivos.h"
 
 //funcion para limpiar pantalla
 void limpiarPantalla(){
